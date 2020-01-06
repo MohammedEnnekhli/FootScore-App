@@ -1,0 +1,48 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Stadiums List</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+		<h2 class="text-primary text-center"> List of Stadiums</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+				  <th>ID</th>
+				  <th>Name Stadium</th>
+				  <th>Capacity</th>
+				  <th>Built Stadium Date</th>
+				  <th>Location</th>
+				  <th>Owner</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="stadiums:${listStadium}">
+				   <td th:text="${stadiums.id_stadium}"></td>
+					<td th:text="${stadiums.name_stadium}"></td>
+					<td th:text="${stadiums.capacity}"></td>
+					<td th:text="${stadiums.built_stadium}"></td>
+					<td th:text="${stadiums.location}"></td>
+					<td th:text="${stadiums.owner}"></td>
+					<td>
+					  <a th:href="@{/stadium/delete(id=${stadiums.id_stadium})}" class="btn btn-danger" >Delete</a>
+					  <a th:href="@{/stadium/edit(id=${stadiums.id_stadium})}" class="btn btn-info">Edit</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		                                       
+	<div class="container">	
+		<ul class="pagination">
+		 <li th:class="${currentPage}==${status.index}?'page-item active':''" th:each="p,status:${pages}" >
+		 	<a class="page-link" th:href="@{/stadium/listStadium(page=${status.index},size=${size})}" th:text="${status.index}"></a>
+		 </li>
+		</ul>
+	</div>	
+		<a href="/" class="text-secondary">Back to index page</a>
+</body>
+</html>

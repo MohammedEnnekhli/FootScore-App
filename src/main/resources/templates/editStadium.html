@@ -1,0 +1,47 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Stadium Edit</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/stadium/addStadium}" method="post" >
+		<div class="form-group">
+				<label for="id">ID:</label> <input type="text"
+					class="form-control" id="id" name="id_stadium" th:value="${stadium.id_stadium}" readonly="readonly"/>
+			</div>
+			<div class="form-group">
+				<label for="name">Stadium name:</label> <input type="text"
+					class="form-control" id="name" name="name_stadium" th:value="${stadium.name_stadium}"/>
+			</div>
+			<div class="form-group">
+				<label for="location">Location:</label> <input
+					type="text" class="form-control" id="location" name="location" th:value="${stadium.location}"/>
+			</div>
+			<div class="form-group">
+				<label for="owner"> Owner:</label> <input
+					type="text" class="form-control" id="owner" name="owner" th:value="${stadium.owner}" />
+			</div>
+			
+			<div class="form-group">
+				<label for="capacity"> Capacity:</label> <input
+					type="text" class="form-control" id="capacity" name="capacity" th:value="${stadium.capacity}" />
+			</div>
+
+			<div class="form-group">
+				<label for="built_stadium"> Built Stadium Date:</label>
+				 <input type="date" class="form-control" id="built_stadium" name="built_stadium" th:value="${stadium.built_stadium}" />
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Athletic List</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+		<h2 class="text-primary text-center"> List of Athletics</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+				  <th>ID</th>
+				  <th>Full Name Athletic</th>
+				  <th>Nationality</th>
+				  <th>Birth Date</th>
+				  <th>Position</th>
+				  <th>Club</th>
+			  
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="athletic:${listAthletic}">
+				   <td th:text="${athletic.id_athletic}"></td>
+					<td th:text="${athletic.name_athletic}"></td>
+					<td th:text="${athletic.nationality}"></td>
+					<td th:text="${athletic.date_birth}"></td>
+					<td th:text="${athletic.position}"></td>
+					<td th:text="${athletic.club.getName_club()}"></td>
+					<td>
+					  <a th:href="@{/athletic/delete(id=${athletic.id_athletic})}" class="btn btn-danger" >Delete</a>
+					   <a th:href="@{/athletic/edit(id=${athletic.id_athletic})}" class="btn btn-info">Edit</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+				<div class="container">	
+			<ul class="pagination">
+			 <li th:class="${currentPage}==${status.index}?'page-item active':''" th:each="p,status:${pages}" >
+			 	<a class="page-link" th:href="@{/athletic/listAthletic(page=${status.index},size=${size})}" th:text="${status.index}"></a>
+			 </li>
+			</ul>
+	  </div>
+		
+		<a href="/" class="text-secondary">Back to index page</a>
+</body>
+</html>

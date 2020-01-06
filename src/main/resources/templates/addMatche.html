@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Add Matche</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/matche/addMatche}" method="post">
+			<div class="form-group">
+				<label for="date">Matche Date:</label> <input type="date"
+					class="form-control" id="date" name="date_match"/>
+			</div>
+             
+             <div class="form-group">
+				<label for="league"> League:</label>
+				 <select  class="form-control" id="league" name="league" >
+				<option th:each="league:${leagueList}" th:text="${league.name_league}"  th:value="${league.id_league}"></option>
+				 </select>
+			</div>
+			<div class="form-group">
+				<label for="round">Round:</label> <input type="text"
+					class="form-control" id="round" name="round"/>
+			</div>
+			<div class="form-group">
+				<label for="club1"> Home Team:</label>
+				 <select  class="form-control" id="club1" name="home_team" >
+				<option th:each="club:${clubList}" th:text="${club.name_club}"  th:value="${club.id_club}"></option>
+				 </select>
+			</div>
+			<div class="form-group">
+				<label for="club2"> Away Team:</label>
+				 <select  class="form-control" id="club2" name="away_team" >
+				<option th:each="club:${clubList}" th:text="${club.name_club}"  th:value="${club.id_club}"></option>
+				 </select>
+			</div>
+			<div class="form-group">
+				<label for="home_goals">Home Team Goals:</label> <input type="text"
+					class="form-control" id="home_goals" name="goals_home_team"/>
+			</div>
+			<div class="form-group">
+				<label for="away_goals">Away Team Goals:</label> <input type="text"
+					class="form-control" id="away_goals" name="goals_away_team"/>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+
+</body>
+</html>

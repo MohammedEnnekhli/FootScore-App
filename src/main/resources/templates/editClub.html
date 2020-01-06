@@ -1,0 +1,62 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Club Edit</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/club/addClub}" method="post" th:object="${club}" >
+		<div class="form-group">
+				<label for="id">ID:</label> <input type="text"
+					class="form-control" id="id" name="id_club" th:value="${club.id_club}" readonly="readonly"/>
+			</div>
+			<div class="form-group">
+				<label for="name_club">Club Name:</label> <input type="text"
+					class="form-control" id="name_club" name="name_club" th:value="${club.name_club}"/>
+			</div>
+			<div class="form-group">
+				<label for="nbr_champ">Championship Number :</label> <input
+					type="text" class="form-control" id="nbr_champ" name="nbr_champ" th:value="${club.nbr_champ}"/>
+			</div>
+			<div class="form-group">
+				<label for="date_creation"> Creation Date:</label> <input
+					type="date" class="form-control" id="date_creation" name="date_creation" th:value="${club.date_creation}" />
+			</div>
+			
+			<div class="form-group">
+				<label for="city"> City:</label> <input
+					type="text" class="form-control" id="city" name="city" th:value="${club.city}"/>
+			</div>
+
+			<div class="form-group">
+				<label for="league"> League:</label>
+				 <select  class="form-control" id="league" name="league" >
+				<option th:each="leagues:${listLeague}" th:text="${leagues.name_league}"  th:value="${leagues.id_league}" th:selected="${leagues.id_league}==${club.league.getId_league()}?'selected'"></option>
+				 </select>
+			</div>
+			<div class="form-group">
+				<label for="stadium"> Stadium:</label>
+				 <select  class="form-control" id="stadium" name="stadium" >
+				<option th:each="stadiums:${listStadium}" th:text="${stadiums.name_stadium}"  th:value="${stadiums.id_stadium}" th:selected="${stadiums.id_stadium}==${club.stadium.getId_stadium()}?'selected'" ></option>
+				 </select>
+			</div>
+			<div class="form-group">
+               <p>Club Logo:</p>
+				 <div class="custom-file mb-3">
+				      <input type="file" class="custom-file-input" id="logo" name="clubLogo" th:value="${club.clubLogo}"/>
+				      <label class="custom-file-label" for="logo">Logo</label>
+				 </div>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+
+</body>
+</html>

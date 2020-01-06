@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Home</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<header>
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="bg-primary text-light text-center">Welcome to Index
+					page</h1>
+			</div>
+
+		</div>
+	</div>
+</header>
+<body class="bg-secondary">
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Logo</a>
+
+		<!-- Links -->
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="" id="navbardrop"
+				data-toggle="dropdown">Continents</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="continent/addContinent">Add Continent</a> 
+					<a class="dropdown-item" href="continent/listContinent">Continents List</a>
+				</div></li>
+
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Leagues </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="league/addleague">Add League</a> 
+					<a class="dropdown-item" href="league/listLeague">Leagues List</a>
+					<a th:each="league:${leagueList}" th:text="${league.name_league}" class="dropdown-item" th:href="@{league/infos(id=${league.id_league})}"></a>					
+				</div></li>
+				
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Stadiums </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="stadium/addStadium">Add Stadium</a> <a
+						class="dropdown-item" href="stadium/listStadium">Stadiums List</a>
+				</div></li>
+								<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Clubs </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="club/addClub">Add Club</a> <a
+						class="dropdown-item" href="club/listClub">Clubs List</a>
+				</div></li>
+				
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Athletics </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="athletic/addAthletic">Add Athletic</a> <a
+						class="dropdown-item" href="athletic/listAthletic">Athletics List</a>
+				</div></li>
+				<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> Matches </a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="matche/addMatche">Add Matche</a> <a
+						class="dropdown-item" href="matche/listMatche">Matches List</a>
+				</div></li>
+				<li class="nav-item">
+				<a class="nav-link " href="/user/login">Login</a>
+				</li>
+				<li class="nav-item">
+				<a class="nav-link " th:href="@{user/logout}" th:inline="text">[[${#httpServletRequest.remoteUser}]]</a>
+				</li>
+							
+
+		</ul>
+	</nav>
+
+
+			
+
+
+</body>
+</html>

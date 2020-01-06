@@ -1,0 +1,50 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Athletic Edit</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/athletic/addAthletic}" method="post" >
+					
+	         <div class="form-group">
+				<label for="id">ID:</label> <input type="text"
+					class="form-control" id="id" name="id_athletic" th:value="${athletic.id_athletic}" readonly="readonly"/>
+			</div>
+			<div class="form-group">
+				<label for="Athletic_club">Full Name:</label> <input type="text"
+					class="form-control" id="Athletic_club" name="name_athletic" th:value="${athletic.name_athletic}"/>
+			</div>
+			<div class="form-group">
+				<label for="nationality">Nationality :</label> <input
+					type="text" class="form-control" id="nationality" name="nationality" th:value="${athletic.nationality}" />
+			</div>
+			<div class="form-group">
+				<label for="Birth_Day"> Birth Day:</label> <input
+					type="date" class="form-control" id="Birth_Day" name="date_birth" th:value="${athletic.date_birth}" />
+			</div>
+			
+			<div class="form-group">
+				<label for="Position"> Position:</label> <input
+					type="text" class="form-control" id="Position" name="position" th:value="${athletic.position}"/>
+			</div>
+
+			<div class="form-group">
+				<label for="club"> Club:</label>
+				 <select  class="form-control" id="club" name="club" >
+				<option th:each="club:${listClub}" th:text="${club.name_club}"   th:value="${club.id_club}"  th:selected="${club.id_club}==${athletic.club.getId_club()}?'selected'"></option>
+				 </select>
+			</div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Add League</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/league/addLeague}" method="post" >
+			<div class="form-group">
+				<label for="name">League name:</label> <input type="text"
+					class="form-control" id="name" name="name_league"/>
+			</div>
+			<div class="form-group">
+				<label for="country">Country:</label> <input
+					type="text" class="form-control" id="country" name="country" />
+			</div>
+			<div class="form-group">
+				<label for="club">Number of clubs:</label> <input
+					type="text" class="form-control" id="club" name="nbr_club" />
+			</div>
+			<div class="form-group">
+				<label for="continent">Continent:</label>
+				<select  class="form-control" id="continent" name="continent">
+				<option th:each="continent:${listContinent}" th:text="${continent.name_continent}"  th:value="${continent.id_continent}"> </option>
+				</select>
+			</div>
+			
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+</body>
+</html>

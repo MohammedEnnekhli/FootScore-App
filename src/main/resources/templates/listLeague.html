@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>League List</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+		<h2 class="text-primary text-center"> List of Leagues</h2>
+		<table class="table table-striped" style="margin-left:20px">
+			<thead>
+				<tr>
+				  <th>ID</th>
+				  <th>Name League</th>
+				  <th>Country</th>
+				  <th>Number of clubs</th>
+				  <th>Continent</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="leagues:${listLeagues}">
+				    <td th:text="${leagues.id_league}"></td>
+					<td th:text="${leagues.name_league}"></td>
+					<td th:text="${leagues.country}"></td>
+					<td th:text="${leagues.nbr_club}"></td>
+					<td th:text="${leagues.continent.getName_continent()}"></td>
+					<td>
+													 
+					   <a th:href="@{/league/delete(id=${leagues.id_league})}" class="btn btn-danger">Delete</a>												  
+                         <a th:href="@{/league/edit(id=${leagues.id_league})}" class="btn btn-info">Edit</a>               			
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="container">
+		<ul class="pagination">
+		 <li th:class="${currentPage}==${status.index}?'page-item active':''" th:each="page,status:${pages}"><a class="page-link" th:href="@{/league/listLeague(page=${status.index},size=${size})}" th:text="${status.index}"></a></li>
+		</ul>
+		</div>
+		<a href="/" class="text-secondary">Back to index page</a>
+</body>
+</html>

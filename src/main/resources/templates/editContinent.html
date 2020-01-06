@@ -1,0 +1,29 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Add Continent</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+	<div class="container">
+
+		<form th:action="@{/continent/addContinent}" method="post" >
+		<div class="form-group">
+				<label for="id">ID:</label> 
+				<input type="text" class="form-control" id="id" name="id_continent" th:value="${continent.id_continent}" readonly="readonly"/>
+			</div>
+			<div class="form-group">
+				<label for="continent">Continent name:</label> 
+				<input type="text" class="form-control" id="continent" name="name_continent" th:value="${continent.name_continent}" />
+			</div>
+			   
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	
+	</div>
+
+</body>
+</html>

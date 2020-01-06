@@ -1,0 +1,47 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Continent List</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<body>
+
+		<h2 class="text-primary text-center"> List of Continents</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+				  <th>ID</th>
+				  <th>Name Continent</th>
+				  <th>Number of Countries</th>
+				  <th>Leagues List</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="continents:${listContinent}">
+				    <td th:text="${continents.id_continent}"></td>
+					<td th:text="${continents.name_continent}"></td>
+					<td th:text="${continents.leagues.size()}"></td>
+					<td>
+					  <div th:each="league:${continents.leagues}" th:text="${league.getName_league()}"></div>
+					</td>
+					<td>
+					  <a th:href="@{/continent/delete(id=${continents.id_continent})}" class="btn btn-danger" >Delete</a>
+					  <a th:href="@{/continent/edit(id=${continents.id_continent})}" class="btn btn-info">Edit</a>
+					</td>
+					
+				</tr>
+			</tbody>
+		</table>
+		<div class="container">	
+			<ul class="pagination">
+			 <li th:class="${currentPage}==${status.index}?'page-item active':''" th:each="p,status:${pages}" >
+			 	<a class="page-link" th:href="@{/continent/listContinent(page=${status.index},size=${size})}" th:text="${status.index}"></a>
+			 </li>
+			</ul>
+	  </div>
+		
+		<a href="/" class="text-secondary">Back to index page</a>
+</body>
+</html>

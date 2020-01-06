@@ -1,0 +1,460 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<title>Standings</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<!-- <script th:src="@{/js/jquery.min.js}"></script> -->
+<!-- <script th:src="@{/js/bootstrap.min.js}"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+<body >
+	<div class="row navbar navbar-expand-sm bg-dark navbar-dark" style="border-bottom: 1px solid #fff;border-top: 1px solid #fff">
+		<div class="col-2">
+			
+	    	<a class="navbar-brand" href="/"><img src="../images/logo.png" width="60" height="45" alt="logo"></a>
+	    	<span class="text-white h3">FootBall</span>
+		</div>
+		<div class="col-2">
+			<h4 style="border-left: 2px solid #888; padding-left: 20px" class="text-white h3" th:text="${league.name_league}">Leagues</h4>
+		</div>
+		
+	</div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  
+  <!-- Links -->
+  <ul class="navbar-nav" >
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/matche/results(id=${league.id_league})}">Results</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/matche/standings(id=${league.id_league})}">Standings</a>
+    </li>
+  </ul>
+</nav>
+<br/>
+
+<ul class="nav nav-tabs" role="tablist">
+	<li class="nav-item">
+		<a class="nav-link active bg-success font-weight-normal text-light" data-toggle="tab" href="#Overall">Overall</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link bg-info font-weight-normal text-light" data-toggle="tab" href="#Home">Home</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link bg-warning font-weight-normal text-light" data-toggle="tab" href="#Away">Away</a>
+	</li>
+		<li class="nav-item">
+		<a class="nav-link bg-primary font-weight-normal text-light" data-toggle="tab" href="#Attack">Best Attack</a>
+	</li>
+		<li class="nav-item">
+		<a class="nav-link bg-danger font-weight-normal text-light" data-toggle="tab" href="#Defense">Best Defense</a>
+	</li>
+
+</ul>
+<div class="tab-content">
+	<div class="tab-pane container active" id="Overall">
+	
+     <table class="table table-hover table-sm">
+	<thead>
+		<tr>
+			<th style="width:4px">Position</th>
+			<th>Club</th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Drawn</th>
+			<th>Lost</th>
+			<th><abbr title="Goals For">GF</abbr></th>
+			<th><abbr title="Goals Against">GA</abbr></th>
+			<th><abbr title="Goal Difference">GD</abbr></th>
+			<th>Points</th>
+			<th>Form</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="club,status:${clubList}">
+		    	      
+		      
+		      <td th:class="(${status.index}+1)>4?((${status.index}+1)>5?((${status.index}+1)<(${clubList.size()}-2)?'':'bg-danger'):'bg-info'):'bg-primary'"
+		      th:text="${status.index}+1"></td>
+		      
+			<td>
+				<img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				<a href="#" data-toggle="modal" th:attr="data-target='#OverallClub'+${club.getId_club()}"><span th:text="${club.getName_club()}"></span></a>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" data-th-id="'OverallClub'+${club.getId_club()}" role="dialog">
+				    <div class="modal-dialog modal-lg">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				          <h4 class="modal-title" th:text="${club.getName_club()}"></h4>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+				        </div>
+				        <div class="modal-body">
+				          <p> <strong th:text="${club.name_club}"> </strong> Football Club is a professional football club in <strong th:text="${club.city}"></strong>,
+				           that competes in the <strong th:text="${club.league.name_league}"></strong>. The club has won <span th:text="${club.nbr_champ}"></span> League titles.</p>
+				           <p>Founded in <strong th:text="${club.date_creation}"></strong>, the club has played at <strong th:text="${club.stadium.name_stadium}"></strong> since its formation.
+				           </p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			</td>
+			<td>
+			  <a th:href="@{/club/playedMatches/(id=${club.id_club})}"><span th:text="${club.getPlayed()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/winMatches/(id=${club.id_club})}"><span  th:text="${club.getWon()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/drawnMatches/(id=${club.id_club})}"><span th:text="${club.getDrawn()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/lostMatches/(id=${club.id_club})}"><span th:text="${club.getPlayed()}-(${club.getWon()}+${club.getDrawn()})"></span></a>
+			</td>
+			<td th:text="${club.getGoals_for()}"></td>
+			<td th:text="${club.getGoals_against()}"></td>
+			<td th:text="${club.getGoals_for()}-${club.getGoals_against()}"></td>
+			<td th:text="${club.getPoints()}"></td>
+           	<td th:each="i:${#numbers.sequence(club.getMatchs().size()- 1, club.getMatchs().size()>5?club.getAMatchs().size()-5:0, -1)}" th:class="${club.resultMatche(club.getMatchs().get(i))}=='W'?'badge badge-pill badge-success':(${club.resultMatche(club.getMatchs().get(i))}=='L'?'badge badge-pill badge-danger':'badge badge-pill badge-secondary')">
+	           <a th:text="${club.resultMatche(club.getMatchs().get(i))}" th:title="${club.getMatchs().get(i).date_match}" data-toggle="popover" data-trigger="hover" 
+	           th:data-content="${club.equals(club.getMatchs().get(i).home_team)}?${club.name_club}+' '+${club.getMatchs().get(i).goals_home_team}+' Vs '+${club.getMatchs().get(i).goals_away_team}+' '+${club.getMatchs().get(i).away_team.name_club}:
+	           	 ${club.getMatchs().get(i).home_team.name_club}+' '+${club.getMatchs().get(i).goals_home_team}+' Vs '+${club.getMatchs().get(i).goals_away_team}+' '+${club.name_club}"                                                                                                                                                                                                    
+	            data-placement="top" ></a>                              
+	        </td>    
+		</tr>
+	</tbody>
+</table>
+     	
+	</div>
+	<div class="tab-pane container fade" id="Home">
+<table class="table table-hover table-sm">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Club</th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Drawn</th>
+			<th>Lost</th>
+			<th><abbr title="Goals For">GF</abbr></th>
+			<th><abbr title="Goals Against">GA</abbr></th>
+			<th><abbr title="Goal Difference">GD</abbr></th>
+			<th>Points</th>
+			<th>form</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="club,status:${clubListHome}">
+		    <td th:text="${status.index}+1"></td>
+		    <td>
+				<img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				<a href="#" data-toggle="modal" th:attr="data-target='#club'+${club.getId_club()}"><span th:text="${club.getName_club()}"></span></a>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" data-th-id="'club'+${club.getId_club()}" role="dialog">
+				    <div class="modal-dialog modal-lg">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				          <h4 class="modal-title" th:text="${club.getName_club()}"></h4>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+				        </div>
+				        <div class="modal-body">
+				          <p> <strong th:text="${club.name_club}"> </strong> Football Club is a professional football club in <strong th:text="${club.city}"></strong>,
+				           that competes in the <strong th:text="${club.league.name_league}"></strong>. The club has won <span th:text="${club.nbr_champ}"></span> League titles.</p>
+				           <p>Founded in <strong th:text="${club.date_creation}"></strong>, the club has played at <strong th:text="${club.stadium.name_stadium}"></strong> since its formation.
+				           </p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			</td>
+			<td>
+			  <a th:href="@{/club/playedHomeMatches/(id=${club.id_club})}"><span  th:text="${club.getPlayedHome()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/winHomeMatches/(id=${club.id_club})}"><span th:text="${club.getWonHome()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/drawnHomeMatches/(id=${club.id_club})}"><span th:text="${club.getDrawnHome()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/lostHomeMatches/(id=${club.id_club})}"><span th:text="${club.getPlayedHome()}-(${club.getWonHome()}+${club.getDrawnHome()})"></span></a>
+			</td>
+			<td th:text="${club.getGoals_forHome()}"></td>
+			<td th:text="${club.getGoals_againstHome()}"></td>
+			<td th:text="${club.getGoals_forHome()}-${club.getGoals_againstHome()}"></td>
+			<td th:text="${club.getPointsHome()}"></td>
+                    <!-- to loop through a list in inverse order:
+                    
+                         public Integer[] sequence(Integer from, Integer to, Integer step)
+                         Produces an array with a sequence of integer numbers, using the specified step.
+                         Parameters:
+								from - value to start the sequence from
+								to - value to produce the sequence to
+								step - the step to be used
+
+  			 -->
+		
+				   <td th:each="i:${#numbers.sequence(club.getHome_matchs().size()- 1, club.getHome_matchs().size()>5?club.getHome_matchs().size()-5:0, -1)}" th:class="${club.getHome_matchs().get(i).goals_home_team}>${club.getHome_matchs().get(i).goals_away_team}?'badge badge-pill badge-success':(${club.getHome_matchs().get(i).goals_home_team}<${club.getHome_matchs().get(i).goals_away_team}?'badge badge-pill badge-danger':'badge badge-pill badge-secondary')">
+	            	<a th:text="${club.getHome_matchs().get(i).goals_home_team}>${club.getHome_matchs().get(i).goals_away_team}?'W':(${club.getHome_matchs().get(i).goals_home_team}<${club.getHome_matchs().get(i).goals_away_team}?'L':'D')"
+	            	th:title="${club.getHome_matchs().get(i).date_match}" data-toggle="popover" data-trigger="hover" th:data-content="${club.name_club}+' '+${club.getHome_matchs().get(i).goals_home_team}+' Vs '+${club.getHome_matchs().get(i).goals_away_team}+' '+${club.getHome_matchs().get(i).away_team.name_club}"
+	            	data-placement="top" ></a>
+	      
+			</td>
+			
+		</tr>
+	</tbody>
+</table>
+			  	
+
+		  <script>
+					$(document).ready(function(){
+					    $('[data-toggle="popover"]').popover();   
+					});
+			</script>
+
+	</div>
+
+	<div class="tab-pane container fade" id="Away">
+	  <table class="table table-hover table-sm">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Club</th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Drawn</th>
+			<th>Lost</th>
+			<th><abbr title="Goals For">GF</abbr></th>
+			<th><abbr title="Goals Against">GA</abbr></th>
+			<th><abbr title="Goal Difference">GD</abbr></th>
+			<th>Points</th>
+			<th>Form</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="club,status:${clubListAway}">
+		    <td th:text="${status.index}+1"></td>
+		    <td>
+				<img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				<a href="#" data-toggle="modal" th:attr="data-target='#awayClub'+${club.getId_club()}"><span th:text="${club.getName_club()}"></span></a>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" data-th-id="'awayClub'+${club.getId_club()}" role="dialog">
+				    <div class="modal-dialog modal-lg">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				          <h4 class="modal-title" th:text="${club.getName_club()}"></h4>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+				        </div>
+				        <div class="modal-body">
+				          <p> <strong th:text="${club.name_club}"> </strong> Football Club is a professional football club in <strong th:text="${club.city}"></strong>,
+				           that competes in the <strong th:text="${club.league.name_league}"></strong>. The club has won <span th:text="${club.nbr_champ}"></span> League titles.</p>
+				           <p>Founded in <strong th:text="${club.date_creation}"></strong>, the club has played at <strong th:text="${club.stadium.name_stadium}"></strong> since its formation.
+				           </p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			</td>
+			<td>
+				<a th:href="@{/club/playedAwayMatches/(id=${club.id_club})}"><span th:text="${club.getPlayed()}-${club.getPlayedHome()}"></span></a>
+			</td>
+			<td>
+				<a th:href="@{/club/winAwayMatches/(id=${club.id_club})}"><span th:text="${club.getWon()}-${club.getWonHome()}"></span></a>
+			</td>
+			<td>
+				<a th:href="@{/club/drawnAwayMatches/(id=${club.id_club})}"><span th:text="${club.getDrawn()}-${club.getDrawnHome()}"></span></a>
+			</td>
+			<td>
+				<a th:href="@{/club/lostAwayMatches/(id=${club.id_club})}"><span th:text="(${club.getPlayed()}-${club.getPlayedHome()})-((${club.getWon()}-${club.getWonHome()})+(${club.getDrawn()}-${club.getDrawnHome()}))"></span></a>
+			</td>
+			<td th:text="${club.getGoals_for()}-${club.getGoals_forHome()}"></td>
+			<td th:text="${club.getGoals_against()}-${club.getGoals_againstHome()}"></td>
+			<td th:text="(${club.getGoals_for()}-${club.getGoals_forHome()})-(${club.getGoals_against()}-${club.getGoals_againstHome()})"></td>
+			<td th:text="${club.getPoints()}-${club.getPointsHome()}"></td>
+			  <td th:each="i:${#numbers.sequence(club.getAway_matchs().size()- 1, club.getAway_matchs().size()>5?club.getAway_matchs().size()-5:0, -1)}" th:class="${club.getAway_matchs().get(i).goals_home_team}<${club.getAway_matchs().get(i).goals_away_team}?'badge badge-pill badge-success':(${club.getAway_matchs().get(i).goals_home_team}>${club.getAway_matchs().get(i).goals_away_team}?'badge badge-pill badge-danger':'badge badge-pill badge-secondary')">
+			    
+			     <a th:text="${club.getAway_matchs().get(i).goals_home_team}<${club.getAway_matchs().get(i).goals_away_team}?'W':(${club.getAway_matchs().get(i).goals_home_team}>${club.getAway_matchs().get(i).goals_away_team}?'L':'D')"
+			      th:title="${club.getAway_matchs().get(i).date_match}" data-toggle="popover" data-trigger="hover" th:data-content="${club.getAway_matchs().get(i).home_team.name_club}+' '+${club.getAway_matchs().get(i).goals_home_team}+' Vs '+${club.getAway_matchs().get(i).goals_away_team}+' '+${club.name_club}"
+	            	data-placement="top"></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+	</div>
+	
+		<div class="tab-pane container fade" id="Attack">
+	  <table class="table table-hover table-sm">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Club</th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Drawn</th>
+			<th>Lost</th>
+			<th><abbr title="Goals For">GF</abbr></th>
+			<th><abbr title="Goals Against">GA</abbr></th>
+			<th><abbr title="Goal Difference">GD</abbr></th>
+			<th>Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="club,status:${clubListGoalsFor}">
+		    	      
+		      <td th:text="${status.index}+1"></td>
+		      
+			<td>
+				<img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				<a href="#"  class="standing-table__team-link" data-toggle="modal" th:attr="data-target='#GoalsForClub'+${club.getId_club()}"
+				th:text="${club.getName_club()}"></a>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" data-th-id="'GoalsForClub'+${club.getId_club()}" role="dialog">
+				    <div class="modal-dialog modal-lg">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				          <h4 class="modal-title" th:text="${club.getName_club()}"></h4>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+				        </div>
+				        <div class="modal-body">
+				          <p> <strong th:text="${club.name_club}"> </strong> Football Club is a professional football club in <strong th:text="${club.city}"></strong>,
+				           that competes in the <strong th:text="${club.league.name_league}"></strong>. The club has won <span th:text="${club.nbr_champ}"></span> League titles.</p>
+				           <p>Founded in <strong th:text="${club.date_creation}"></strong>, the club has played at <strong th:text="${club.stadium.name_stadium}"></strong> since its formation.
+				           </p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			</td>
+			<td>
+			  <a th:href="@{/club/playedMatches/(id=${club.id_club})}"><span  th:text="${club.getPlayed()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/winMatches/(id=${club.id_club})}"><span  th:text="${club.getWon()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/drawnMatches/(id=${club.id_club})}"><span th:text="${club.getDrawn()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/lostMatches/(id=${club.id_club})}"><span th:text="${club.getPlayed()}-(${club.getWon()}+${club.getDrawn()})"></span></a>
+			</td>
+			<td th:text="${club.getGoals_for()}"></td>
+			<td th:text="${club.getGoals_against()}"></td>
+			<td th:text="${club.getGoals_for()}-${club.getGoals_against()}"></td>
+			<td th:text="${club.getPoints()}"></td>
+		</tr>
+	</tbody>
+</table>
+	</div>
+	
+		<div class="tab-pane container fade" id="Defense">
+	  <table class="table table-hover table-sm">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Club</th>
+			<th>Played</th>
+			<th>Won</th>
+			<th>Drawn</th>
+			<th>Lost</th>
+			<th><abbr title="Goals For">GF</abbr></th>
+			<th><abbr title="Goals Against">GA</abbr></th>
+			<th><abbr title="Goal Difference">GD</abbr></th>
+			<th>Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="club,status:${clubListGoalsAgainst}">
+		    	      
+		      <td th:text="${status.index}+1"></td>
+		      
+			<td>
+				<img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				<a href="#" data-toggle="modal" th:attr="data-target='#GoalsAgainst'+${club.getId_club()}"><span th:text="${club.getName_club()}"></span></a>
+				
+				  <!-- Modal -->
+				  <div class="modal fade" data-th-id="'GoalsAgainst'+${club.getId_club()}" role="dialog">
+				    <div class="modal-dialog modal-lg">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <img alt="logo" th:src="'../images/'+${club.clubLogo}" style="width:40px"/>
+				          <h4 class="modal-title" th:text="${club.getName_club()}"></h4>
+				          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+				        </div>
+				        <div class="modal-body">
+				          <p> <strong th:text="${club.name_club}"> </strong> Football Club is a professional football club in <strong th:text="${club.city}"></strong>,
+				           that competes in the <strong th:text="${club.league.name_league}"></strong>. The club has won <span th:text="${club.nbr_champ}"></span> League titles.</p>
+				           <p>Founded in <strong th:text="${club.date_creation}"></strong>, the club has played at <strong th:text="${club.stadium.name_stadium}"></strong> since its formation.
+				           </p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+			</td>
+			<td>
+			  <a th:href="@{/club/playedMatches/(id=${club.id_club})}"><span  th:text="${club.getPlayed()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/winMatches/(id=${club.id_club})}"><span  th:text="${club.getWon()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/drawnMatches/(id=${club.id_club})}"><span th:text="${club.getDrawn()}"></span></a>
+			</td>
+			<td>
+			  <a th:href="@{/club/lostMatches/(id=${club.id_club})}"><span th:text="${club.getPlayed()}-(${club.getWon()}+${club.getDrawn()})"></span></a>
+			</td>
+			<td th:text="${club.getGoals_for()}"></td>
+			<td th:text="${club.getGoals_against()}"></td>
+			<td th:text="${club.getGoals_for()}-${club.getGoals_against()}"></td>
+			<td th:text="${club.getPoints()}"></td>
+		</tr>
+	</tbody>
+</table>
+	</div>
+	
+</div>
+
+
+
+
+  
+</body>
+
+</html>

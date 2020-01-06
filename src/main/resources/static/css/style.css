@@ -1,0 +1,25 @@
+.modal-header h4 {
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #117a8b;
+}
+
+.disabled{
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}
+.standing-table__team-link{
+    white-space: nowrap;
+}
+a{
+    text-decoration: none;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-family: Helvetica,Roboto,Arial,sans-serif;
+     background: transparent;
+}
