@@ -31,6 +31,8 @@ public class League implements Serializable {
     @Size( max = 25 )
     private String       country;
 
+    private String logo_league;
+
     @ManyToOne( fetch = FetchType.LAZY )
     @JoinColumn( name = "continent_id" )
     private Continent    continent;
@@ -99,6 +101,14 @@ public class League implements Serializable {
 
     public void setCountry( String country ) {
         this.country = country;
+    }
+
+    public String getLogo_league() {
+        return logo_league;
+    }
+
+    public void setLogo_league( String logo_league ) {
+        this.logo_league = logo_league;
     }
 
     public Continent getContinent() {

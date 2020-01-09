@@ -10,10 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.score.Services.FootService;
 import com.score.entities.Club;
@@ -57,11 +54,12 @@ public class MatcheController {
         }
         footService.goalsClub( matche );
 
-        matche.getHome_team().getMatchs().add( matche );
+       matche.getHome_team().getMatchs().add( matche );
         matche.getAway_team().getMatchs().add( matche );
-        matche.setStadium( matche.getHome_team().getStadium() );
-
+      matche.setStadium( matche.getHome_team().getStadium() );
+        System.out.println("matche est modifié: "+ matche.getGoals_home_team());
         matcheRepository.save( matche );
+        System.out.println("matche est modifié: "+ matche.getGoals_away_team());
 
         return "redirect:/matche/listMatche";
     }
@@ -80,6 +78,8 @@ public class MatcheController {
 
     }
 
+
+
     @GetMapping( value = "/delete" )
     public String delete( Long id ) {
 
@@ -87,37 +87,5 @@ public class MatcheController {
 
         return "redirect:/matche/listMatche";
 
-    }
-
-    @GetMapping( value = "/results" )
-
-    public String results( Long id, Model model ) {
-
-        League targetLeague = leagueRepository.findById( id ).orElse( null );
-        List<Matche> targetMatche = matcheRepository.findByLeagueOrderByRoundDesc( targetLeague );
-        model.addAttribute( "matcheList", targetMatche );
-        model.addAttribute( "league", targetLeague );
-
-        return "results";
-    }
-
-    @GetMapping( value = "/standings" )
-
-    public String standings( Long id, Model model ) {
-        League targetLeague = leagueRepository.findById( id ).orElse( null );
-        List<Club> targetClub = clubRepository.findAllOrderByPoints( targetLeague );
-        List<Club> targetClubHome = clubRepository.findHomeOrderByPoints( targetLeague );
-        List<Club> targetClubAway = clubRepository.findAwayOrderByPoints( targetLeague );
-        List<Club> targetGoalsFor = clubRepository.findAllOrderByGoalsFor( targetLeague );
-        List<Club> targetGoalsAgainst = clubRepository.findAllOrderByGoalsAgainst( targetLeague );
-
-        model.addAttribute( "clubList", targetClub );
-        model.addAttribute( "clubListHome", targetClubHome );
-        model.addAttribute( "clubListAway", targetClubAway );
-        model.addAttribute( "clubListGoalsFor", targetGoalsFor );
-        model.addAttribute( "clubListGoalsAgainst", targetGoalsAgainst );
-        model.addAttribute( "league", targetLeague );
-
-        return "standings";
     }
 }

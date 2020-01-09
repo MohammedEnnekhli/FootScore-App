@@ -1,5 +1,7 @@
 <!DOCTYPE>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="template">
 <title>Add League</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -8,7 +10,7 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <body>
 
-	<div class="container">
+<div layout:fragment="content">
 
 		<form th:action="@{/league/addLeague}" method="post" >
 			<div class="form-group">
@@ -28,6 +30,13 @@
 				<select  class="form-control" id="continent" name="continent">
 				<option th:each="continent:${listContinent}" th:text="${continent.name_continent}"  th:value="${continent.id_continent}"> </option>
 				</select>
+			</div>
+			<div class="form-group">
+				<p>League Logo:</p>
+				<div class="custom-file mb-3">
+					<label class="custom-file-label" for="logo">Logo</label>
+					<input type="file" class="custom-file-input" id="logo" name="logo_league"/>
+				</div>
 			</div>
 			
 			<button type="submit" class="btn btn-primary">Submit</button>

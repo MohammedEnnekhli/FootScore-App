@@ -2,6 +2,9 @@ package com.score.controller;
 
 import javax.validation.Valid;
 
+import com.score.entities.Club;
+import com.score.entities.Matche;
+import com.score.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.score.entities.League;
-import com.score.repositories.ContinentRepository;
-import com.score.repositories.LeagueRepository;
+
+import java.util.List;
 
 @Controller
 @RequestMapping( value = "/league" )
@@ -23,6 +26,12 @@ public class LeagueController {
 
     @Autowired
     private LeagueRepository    leagueRepository;
+    @Autowired
+    MatcheRepository matcheRepository;
+    @Autowired
+    StadiumRepository stadiumRepository;
+    @Autowired
+    ClubRepository clubRepository;
     @Autowired
     private ContinentRepository continentRepository;
 
@@ -91,10 +100,21 @@ public class LeagueController {
 
     public String infos( Long id, Model model ) {
         League targetLeague = leagueRepository.findById( id ).orElse( null );
+        List<Matche> targetMatche = matcheRepository.findByLeagueOrderByRoundDesc( targetLeague );
+        List<Club> targetClub = clubRepository.findAllOrderByPoints( targetLeague );
+        List<Club> targetClubHome = clubRepository.findHomeOrderByPoints( targetLeague );
+        List<Club> targetClubAway = clubRepository.findAwayOrderByPoints( targetLeague );
+        List<Club> targetGoalsFor = clubRepository.findAllOrderByGoalsFor( targetLeague );
+        List<Club> targetGoalsAgainst = clubRepository.findAllOrderByGoalsAgainst( targetLeague );
 
+        model.addAttribute( "matcheList", targetMatche );
+        model.addAttribute( "clubList", targetClub );
+        model.addAttribute( "clubListHome", targetClubHome );
+        model.addAttribute( "clubListAway", targetClubAway );
+        model.addAttribute( "clubListGoalsFor", targetGoalsFor );
+        model.addAttribute( "clubListGoalsAgainst", targetGoalsAgainst );
         model.addAttribute( "league", targetLeague );
-
-        return "leagueInfos";
+        return "leagueResults";
     }
 
 }

@@ -1,5 +1,7 @@
 <!DOCTYPE>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="template">
 <title>Results Details</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -9,7 +11,7 @@
 
 
 <body >
-
+<div layout:fragment="content">
 	<div class="row navbar navbar-expand-sm bg-dark navbar-dark" style="border-bottom: 1px solid #fff;border-top: 1px solid #fff">
 		<div class="col-2">
 			
@@ -72,7 +74,8 @@
 	</tbody>
 </table>
 
- </div> 
+ </div>
+</div>
 </body>
 
 </html>

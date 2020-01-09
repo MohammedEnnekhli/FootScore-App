@@ -1,5 +1,9 @@
 <!DOCTYPE>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+
+	  layout:decorator="template">
 <title>Stadiums List</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -7,7 +11,7 @@
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <body>
-
+<div layout:fragment="content">
 		<h2 class="text-primary text-center"> List of Stadiums</h2>
 		<table class="table table-striped">
 			<thead>
@@ -18,6 +22,7 @@
 				  <th>Built Stadium Date</th>
 				  <th>Location</th>
 				  <th>Owner</th>
+					<th sec:authorize="hasRole('ROLE_ADMIN')">Edit/Delete</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -29,8 +34,8 @@
 					<td th:text="${stadiums.location}"></td>
 					<td th:text="${stadiums.owner}"></td>
 					<td>
-					  <a th:href="@{/stadium/delete(id=${stadiums.id_stadium})}" class="btn btn-danger" >Delete</a>
-					  <a th:href="@{/stadium/edit(id=${stadiums.id_stadium})}" class="btn btn-info">Edit</a>
+					  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/stadium/delete(id=${stadiums.id_stadium})}" class="btn btn-danger" >Delete</a>
+					  <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/stadium/edit(id=${stadiums.id_stadium})}" class="btn btn-info">Edit</a>
 					</td>
 				</tr>
 			</tbody>
@@ -44,5 +49,6 @@
 		</ul>
 	</div>	
 		<a href="/" class="text-secondary">Back to index page</a>
+</div>
 </body>
 </html>

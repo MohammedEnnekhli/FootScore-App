@@ -32,11 +32,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers( "/matche/addMatche", "/athletic/addAthletic", "/club/addClub", "/stadium/addStadium",
                         "/league/addLeague", "/continent/addContinent" )
-                .hasAuthority( "ADMIN" );
+                .hasRole( "ADMIN" );
         http.authorizeRequests()
                 .antMatchers( "/matche/listMatche", "/athletic/listAthletic", "/club/listClub", "/stadium/listStadium",
-                        "/league/listLeague", "/continent/listContinent" )
-                .hasAnyAuthority( "USER","ADMIN" );
+                        "/league/**", "/continent/listContinent" )
+                .hasAnyRole( "USER","ADMIN" );
         http.exceptionHandling().accessDeniedPage( "/user/403" );
     }
 

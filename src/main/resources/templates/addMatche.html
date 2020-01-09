@@ -1,5 +1,7 @@
 <!DOCTYPE>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorator="template">
 <title>Add Matche</title>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -8,7 +10,7 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <body>
 
-	<div class="container">
+<div layout:fragment="content">
 
 		<form th:action="@{/matche/addMatche}" method="post">
 			<div class="form-group">
